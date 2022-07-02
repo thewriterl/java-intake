@@ -67,4 +67,16 @@ public class TedTalkController {
         return ResponseEntity.ok(this.tedTalkService.search(author, title, views, likes, page));
     }
 
+    /**
+     * Deletes a given Ted Talk.
+     * @param id the id of the TedTalk to be deleted
+     * @return Http Status - No Content
+     * @apiNote physical deletion is not safe, this API implements logical deletions.
+     */
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Object> deleteTedTalk(@PathVariable Long id) {
+        this.tedTalkService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
+
 }

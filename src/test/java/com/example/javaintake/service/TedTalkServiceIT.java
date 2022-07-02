@@ -10,6 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.junit.jupiter.api.BeforeEach;
+
+import java.util.Random;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
@@ -127,6 +130,28 @@ public class TedTalkServiceIT {
         assertEquals(0, response.getTotalElements());
     }
 
+    @Test
+    @Transactional
+    void shouldDeleteGivenTedTalk() throws Exception {
+        var response = this.tedTalkService.createTedTalk(tedTalkDTO);
+
+        assertNotNull(response.getId());
+
+        this.tedTalkService.delete(response.getId());
+
+        var maybeDeleted = this.tedTalkRepository.findById(response.getId()).orElseThrow();
+
+        assertTrue(maybeDeleted.getDeleted());
+    }
+
+    @Test
+    @Transactional
+    void shouldFailTryingToDeleteNonExistingTedTalk() throws Exception {
+
+        var nullTedTalk = new Random().nextLong();
+        assertThrows(TedTalkException.class, () -> this.tedTalkService.delete(nullTedTalk));
+
+    }
 
 
 }
