@@ -4,6 +4,7 @@ import com.example.javaintake.domain.dto.TedTalkDTO;
 import com.example.javaintake.domain.entity.TedTalk;
 import com.example.javaintake.repository.TedTalkRepository;
 import com.example.javaintake.service.TedTalkService;
+import com.example.javaintake.utils.DateUtils;
 import com.example.javaintake.utils.components.TedTalkUtils;
 import com.example.javaintake.utils.exception.TedTalkException;
 import org.springframework.data.domain.Example;
@@ -74,5 +75,18 @@ public class TedTalkServiceImpl implements TedTalkService {
             tedTalk.setDeleted(true);
             this.tedTalkRepository.save(tedTalk);
         }
+    }
+
+    @Override
+    public TedTalkDTO updateTedTalk(Long id, TedTalkDTO dto) {
+        TedTalkUtils.validateUpdate(dto);
+        TedTalk tedTalk = this.tedTalkRepository.findById(id).orElseThrow(() -> new TedTalkException("TED Talk Not Found!", HttpStatus.NOT_FOUND));
+        tedTalk.setTitle(dto.getTitle());
+        tedTalk.setAuthor(dto.getAuthor());
+        tedTalk.setReleaseDate(dto.getDisplayDate() == null ? null : DateUtils.parseToZonedDateTime(dto.getDisplayDate()));
+        tedTalk.setDisplayDate(dto.getDisplayDate());
+        tedTalk.setViews(dto.getViews());
+        tedTalk.setLink(TedTalkUtils.generateLink(dto.getAuthor(), dto.getTitle()));
+        return new TedTalkDTO(this.tedTalkRepository.save(tedTalk));
     }
 }

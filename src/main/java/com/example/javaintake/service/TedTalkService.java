@@ -9,4 +9,5 @@ public interface TedTalkService {
     Page<TedTalkDTO> getAll(Integer page);
     Page<TedTalkDTO> search(String author, String title, Long views, Long likes, Integer page);
     void delete(Long id);
+    TedTalkDTO updateTedTalk(Long id, TedTalkDTO dto);
 }

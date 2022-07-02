@@ -79,4 +79,17 @@ public class TedTalkController {
         return ResponseEntity.noContent().build();
     }
 
+    /**
+     * Updates an existing TedTalk
+     * @param id of TedTalk to be Updated
+     * @param dto the Data Transfer Object containing the info to be updated
+     * @return {@link TedTalkDTO}
+     * @apiNote Validates if Author, Title and DisplayDate are Null,
+     * it won't accept null values in these properties.
+     */
+    @PutMapping("/{id}")
+    public ResponseEntity<TedTalkDTO> updateTedTalk(@PathVariable Long id, @RequestBody TedTalkDTO dto) {
+        return ResponseEntity.ok(this.tedTalkService.updateTedTalk(id, dto));
+    }
+
 }

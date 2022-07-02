@@ -154,4 +154,74 @@ public class TedTalkServiceIT {
     }
 
 
+    @Test
+    @Transactional
+    void shouldUpdateGivenTedTalk() throws Exception {
+        var response = this.tedTalkService.createTedTalk(tedTalkDTO);
+
+        assertNotNull(response.getId());
+
+        Faker faker = new Faker();
+
+        response.setTitle(faker.backToTheFuture().character());
+        response.setAuthor(faker.gameOfThrones().house());
+
+        this.tedTalkService.updateTedTalk(response.getId(), response);
+
+        var updated = this.tedTalkRepository.findById(response.getId()).orElseThrow();
+
+        assertEquals(updated.getId(), response.getId());
+        assertNotEquals(updated.getAuthor(), tedTalkDTO.getAuthor());
+        assertNotEquals(updated.getTitle(), tedTalkDTO.getTitle());
+    }
+
+    @Test
+    @Transactional
+    void shouldFailTryingToUpdateWithNullAuthor() throws Exception {
+        var response = this.tedTalkService.createTedTalk(tedTalkDTO);
+
+        assertNotNull(response.getId());
+
+        Faker faker = new Faker();
+
+        response.setTitle(faker.backToTheFuture().character());
+        response.setAuthor(null);
+
+        assertThrows(TedTalkException.class, () -> this.tedTalkService.updateTedTalk(response.getId(), response));
+
+    }
+
+    @Test
+    @Transactional
+    void shouldFailTryingToUpdateWithNullTitle() throws Exception {
+        var response = this.tedTalkService.createTedTalk(tedTalkDTO);
+
+        assertNotNull(response.getId());
+
+        Faker faker = new Faker();
+
+        response.setTitle(null);
+        response.setAuthor(faker.gameOfThrones().character());
+
+        assertThrows(TedTalkException.class, () -> this.tedTalkService.updateTedTalk(response.getId(), response));
+
+    }
+
+    @Test
+    @Transactional
+    void shouldFailTryingToUpdateWithNullDate() throws Exception {
+        var response = this.tedTalkService.createTedTalk(tedTalkDTO);
+
+        assertNotNull(response.getId());
+
+        Faker faker = new Faker();
+
+        response.setTitle(faker.backToTheFuture().character());
+        response.setAuthor(faker.gameOfThrones().character());
+        response.setDisplayDate(null);
+
+        assertThrows(TedTalkException.class, () -> this.tedTalkService.updateTedTalk(response.getId(), response));
+
+    }
+
 }
