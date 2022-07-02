@@ -13,9 +13,7 @@ import org.junit.jupiter.api.BeforeEach;
 
 import java.util.Random;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.when;
 
 @SpringBootTest(classes = JavaIntakeApplication.class)
 @Transactional
