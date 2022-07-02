@@ -55,3 +55,6 @@ Alternatively, you can run the application on you IDE of choice, just don't forg
 make up
 ```
 to set up the database, otherwise it will fail. 
+
+* There's a postman collection included at the root of the project containing all requests, it's the Io.postman_collection.json file 
+
