@@ -97,5 +97,36 @@ public class TedTalkServiceIT {
         assertEquals(50, response.getContent().size());
     }
 
+    @Test
+    @Transactional
+    void shouldSearchByAuthorTedTalkWithNewlySavedTedTalk() throws Exception {
+        var savedTedTalk = this.tedTalkService.createTedTalk(tedTalkDTO);
+
+        var response = this.tedTalkService.search(savedTedTalk.getAuthor(), null, null, null, null);
+
+        assertEquals(1, response.getTotalElements());
+        assertEquals(savedTedTalk.getId(), response.getContent().get(0).getId());
+    }
+
+    @Test
+    @Transactional
+    void shouldSearchByTitleTedTalkWithNewlySavedTedTalk() throws Exception {
+        var savedTedTalk = this.tedTalkService.createTedTalk(tedTalkDTO);
+
+        var response = this.tedTalkService.search(null, savedTedTalk.getTitle(), null, null, null);
+
+        assertEquals(1, response.getTotalElements());
+        assertEquals(savedTedTalk.getId(), response.getContent().get(0).getId());
+    }
+
+    @Test
+    @Transactional
+    void shouldSearchNonExistingTedTalkAndReturnOk() throws Exception {
+        var response = this.tedTalkService.search("asdf", null, null, null, null);
+
+        assertEquals(0, response.getTotalElements());
+    }
+
+
 
 }

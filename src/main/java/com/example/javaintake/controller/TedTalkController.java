@@ -47,4 +47,24 @@ public class TedTalkController {
     }
 
 
+    /**
+     *
+     * Gets a paginated filtered list of  {@link TedTalkDTO }
+     * @param author the desired author search param
+     * @param title the desired title search param
+     * @param views the desired views count search param
+     * @param likes the desired likes count search param
+     * @param page Desired paging.
+     * @apiNote if no page is provided, default page is 0
+     * @return  List of {@link TedTalkDTO}
+     */
+    @GetMapping("/search")
+    public ResponseEntity<Page<TedTalkDTO>> searchTedTalks(@RequestParam(required = false) String author,
+                                                           @RequestParam(required = false) String title,
+                                                           @RequestParam(required = false) Long views,
+                                                           @RequestParam(required = false) Long likes,
+                                                           @RequestParam(required = false) Integer page) {
+        return ResponseEntity.ok(this.tedTalkService.search(author, title, views, likes, page));
+    }
+
 }
