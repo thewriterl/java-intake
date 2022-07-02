@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(classes = JavaIntakeApplication.class)
 @Transactional
-public class TedTalkServiceIT {
+class TedTalkServiceIntegrationTest {
 
     @Autowired
     private TedTalkRepository tedTalkRepository;
