@@ -1,0 +1,15 @@
+version: '2'
+
+services:
+  db:
+    image: postgres:13-alpine
+    container_name: database
+    environment:
+      - POSTGRES_DB=talks
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=demo
+    ports:
+      - "6543:5432"
+    volumes:
+      - ./src/main/resources/static/data.csv:/var/lib/sample/data.csv
+      - ./src/main/resources/initial_schema.sql:/docker-entrypoint-initdb.d/initial_schema.sql
