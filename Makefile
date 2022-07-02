@@ -10,8 +10,10 @@ database:
 install:
 	mvn install -DskipTests
 
-app:
+application:
 	java -jar target/java-intake-0.0.1-SNAPSHOT.jar
 
 up: down build database
 
+test:
+	mvn verify

@@ -1,0 +1,168 @@
+{
+	"info": {
+		"_postman_id": "21387853-0c42-4488-bc6e-22a2e391f837",
+		"name": "Io",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "findAll",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8081/api/v1/ted-talks",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"v1",
+						"ted-talks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "search",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8081/api/v1/ted-talks/search?views=2700000",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"v1",
+						"ted-talks",
+						"search"
+					],
+					"query": [
+						{
+							"key": "title",
+							"value": "Why do we hiccup?",
+							"disabled": true
+						},
+						{
+							"key": "views",
+							"value": "2700000"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "findAllPageable",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8081/api/v1/ted-talks?page=108",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"v1",
+						"ted-talks"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "108"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete ted talk",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:8081/api/v1/ted-talks/2",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"v1",
+						"ted-talks",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create ted talk",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "        {\n            \"id\": null,\n            \"title\": \"Why people believe weird things\",\n            \"author\": \"Michael Shermer Jr.\",\n            \"views\": 7800001,\n            \"likes\": 236001,\n            \"link\": \"https://ted.com/talks/michael_shermer_why_people_believe_weird_things\",\n            \"deleted\": false,\n            \"displayDate\": \"July 2009\"\n        }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/api/v1/ted-talks",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"v1",
+						"ted-talks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update ted talk Copy",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "        {\n            \"id\": 5401,\n            \"title\": \"Why people believe weird things\",\n            \"author\": \"Michael Shermer Jr.\",\n            \"views\": 7800001,\n            \"likes\": 236001,\n            \"link\": \"https://ted.com/talks/michael_shermer_why_people_believe_weird_things\",\n            \"deleted\": false,\n            \"displayDate\": \"July 2009\"\n        }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8081/api/v1/ted-talks/5401",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"v1",
+						"ted-talks",
+						"5401"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

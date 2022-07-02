@@ -25,8 +25,33 @@ make install
 make up
 ```
 
-This will setup the Postgres database and insert the sample data from the CSV. Afterwards, simply run
+This will set up the Postgres database and insert the sample data from the CSV. 
+
+Afterwards, simply run this in a separate terminal instance. 
 
 ```bash
-make app
+make application
 ```
+
+## How to Run Tests
+
+Everytime you run the application or the tests, you have to previously set up the database by running
+
+```bash
+make up
+```
+
+Then you can run 
+
+```bash
+make verify
+```
+
+To run the tests
+
+
+Alternatively, you can run the application on you IDE of choice, just don't forget to run 
+```bash
+make up
+```
+to set up the database, otherwise it will fail. 
