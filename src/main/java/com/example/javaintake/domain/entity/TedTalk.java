@@ -1,7 +1,11 @@
 package com.example.javaintake.domain.entity;
 
 
+import com.example.javaintake.domain.dto.TedTalkDTO;
+import com.example.javaintake.utils.DateUtils;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.ZonedDateTime;
 
 @Entity
@@ -14,15 +18,18 @@ public class TedTalk {
     private Long id;
 
     @Column(name = "title")
+    @NotNull
     private String title;
 
     @Column(name = "author")
+    @NotNull
     private String author;
 
     @Column(name = "release_date")
     private ZonedDateTime releaseDate;
 
     @Column(name = "display_date")
+    @NotNull
     private String displayDate;
 
     @Column(name = "total_views")
@@ -39,6 +46,18 @@ public class TedTalk {
 
     public TedTalk() {
         super();
+    }
+
+    public TedTalk(TedTalkDTO dto) {
+        this.setId(dto.getId());
+        this.setTitle(dto.getTitle());
+        this.setAuthor(dto.getAuthor());
+        this.setViews(dto.getViews());
+        this.setDisplayDate(dto.getDisplayDate());
+        this.setReleaseDate(
+                dto.getDisplayDate() == null ? null : DateUtils.parseToZonedDateTime(dto.getDisplayDate()));
+        this.setLikes(dto.getLikes());
+        this.setDeleted(dto.getDeleted());
     }
 
     public Long getId() {
