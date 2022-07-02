@@ -5,6 +5,8 @@ import com.example.javaintake.domain.entity.TedTalk;
 import com.example.javaintake.repository.TedTalkRepository;
 import com.example.javaintake.service.TedTalkService;
 import com.example.javaintake.utils.components.TedTalkUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -23,5 +25,10 @@ public class TedTalkServiceImpl implements TedTalkService {
         tedTalk.setDeleted(false);
         tedTalk.setLink(TedTalkUtils.generateLink(dto.getAuthor(), dto.getTitle()));
         return new TedTalkDTO(this.tedTalkRepository.save(tedTalk));
+    }
+
+    @Override
+    public Page<TedTalkDTO> getAll(Integer page) {
+        return tedTalkRepository.findAll(PageRequest.of(page == null ? 0 : page, 50)).map(TedTalkDTO::new);
     }
 }

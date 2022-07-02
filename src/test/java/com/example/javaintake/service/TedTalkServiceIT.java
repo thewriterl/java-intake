@@ -81,5 +81,21 @@ public class TedTalkServiceIT {
         assertThrows(TedTalkException.class, () -> this.tedTalkService.createTedTalk(tedTalkDTO));
     }
 
+    @Test
+    @Transactional(readOnly = true)
+    void shouldFindTedTalksWithPaging() throws Exception {
+        var response = this.tedTalkService.getAll(0);
+        assertNotNull(response);
+        assertEquals(50, response.getContent().size());
+    }
+
+    @Test
+    @Transactional(readOnly = true)
+    void shouldFindTedTalksWithPagingNull() throws Exception {
+        var response = this.tedTalkService.getAll(null);
+        assertNotNull(response);
+        assertEquals(50, response.getContent().size());
+    }
+
 
 }
