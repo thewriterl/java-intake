@@ -4,6 +4,9 @@ package com.example.javaintake.controller;
 import com.example.javaintake.domain.dto.TedTalkDTO;
 import com.example.javaintake.domain.entity.TedTalk;
 import com.example.javaintake.service.TedTalkService;
+import com.example.javaintake.service.impl.TedTalkServiceImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +18,7 @@ public class TedTalkController {
 
     private final TedTalkService tedTalkService;
 
+    private final Logger logger = LoggerFactory.getLogger(TedTalkController.class);
 
     public TedTalkController(TedTalkService tedTalkService) {
         this.tedTalkService = tedTalkService;
@@ -30,7 +34,9 @@ public class TedTalkController {
      */
     @PostMapping
     public ResponseEntity<TedTalkDTO> createTedTalk(@RequestBody TedTalkDTO dto) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(this.tedTalkService.createTedTalk(dto));
+        logger.info("Creating Ted Talk");
+        this.tedTalkService.createTedTalk(dto);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     /**
@@ -43,6 +49,7 @@ public class TedTalkController {
      */
     @GetMapping
     public ResponseEntity<Page<TedTalkDTO>> getAllTedTalks(@RequestParam(required = false) Integer page) {
+        logger.info("Getting all ted talks for page: {}", page);
         return ResponseEntity.ok(this.tedTalkService.getAll(page));
     }
 
@@ -64,6 +71,7 @@ public class TedTalkController {
                                                            @RequestParam(required = false) Long views,
                                                            @RequestParam(required = false) Long likes,
                                                            @RequestParam(required = false) Integer page) {
+        logger.info("Searching for ted talks with parameters: {}, {}, {}, {}, with page: {}", author, title, views, likes, page);
         return ResponseEntity.ok(this.tedTalkService.search(author, title, views, likes, page));
     }
 
@@ -75,6 +83,7 @@ public class TedTalkController {
      */
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteTedTalk(@PathVariable Long id) {
+        logger.info("Trying to delete Ted Talk with ID: {}", id);
         this.tedTalkService.delete(id);
         return ResponseEntity.noContent().build();
     }
@@ -89,6 +98,7 @@ public class TedTalkController {
      */
     @PutMapping("/{id}")
     public ResponseEntity<TedTalkDTO> updateTedTalk(@PathVariable Long id, @RequestBody TedTalkDTO dto) {
+        logger.info("Trying to update ted talk with ID: {}", id);
         return ResponseEntity.ok(this.tedTalkService.updateTedTalk(id, dto));
     }
 

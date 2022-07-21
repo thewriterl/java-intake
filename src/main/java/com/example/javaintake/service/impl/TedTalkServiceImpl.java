@@ -7,6 +7,8 @@ import com.example.javaintake.service.TedTalkService;
 import com.example.javaintake.utils.DateUtils;
 import com.example.javaintake.utils.components.TedTalkUtils;
 import com.example.javaintake.utils.exception.TedTalkException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.Page;
@@ -20,6 +22,8 @@ public class TedTalkServiceImpl implements TedTalkService {
 
     private final TedTalkRepository tedTalkRepository;
 
+    private final Logger logger = LoggerFactory.getLogger(TedTalkServiceImpl.class);
+
     public TedTalkServiceImpl(TedTalkRepository tedTalkRepository) {
         this.tedTalkRepository = tedTalkRepository;
     }
@@ -28,6 +32,7 @@ public class TedTalkServiceImpl implements TedTalkService {
     @Transactional
     public TedTalkDTO createTedTalk(TedTalkDTO dto) {
         TedTalkUtils.validateCreate(dto);
+        logger.debug("Did validate new Ted Talk");
         TedTalk tedTalk = new TedTalk(dto);
         tedTalk.setDeleted(false);
         tedTalk.setLink(TedTalkUtils.generateLink(dto.getAuthor(), dto.getTitle()));
