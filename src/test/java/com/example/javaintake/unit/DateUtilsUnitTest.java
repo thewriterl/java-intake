@@ -3,7 +3,8 @@ package com.example.javaintake.unit;
 import com.example.javaintake.utils.DateUtils;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.Month;
 import java.time.ZonedDateTime;
@@ -11,7 +12,7 @@ import java.time.ZonedDateTime;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@SpringBootTest
+@ExtendWith(MockitoExtension.class)
 class DateUtilsUnitTest {
 
     @Test

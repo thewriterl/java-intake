@@ -16,7 +16,6 @@ import java.util.Random;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(classes = JavaIntakeApplication.class)
-@Transactional
 class TedTalkServiceIntegrationTest {
 
     @Autowired
@@ -31,6 +30,7 @@ class TedTalkServiceIntegrationTest {
     public void init() {
         Faker faker = new Faker();
         tedTalkDTO = new TedTalkDTO();
+
         tedTalkDTO.setAuthor(faker.backToTheFuture().character());
         tedTalkDTO.setTitle(faker.gameOfThrones().dragon());
         tedTalkDTO.setLikes(300L);
@@ -39,7 +39,6 @@ class TedTalkServiceIntegrationTest {
     }
 
     @Test
-    @Transactional
     void shouldCreateGivenTedTalk() throws Exception {
         var response = this.tedTalkService.createTedTalk(tedTalkDTO);
 
@@ -55,35 +54,30 @@ class TedTalkServiceIntegrationTest {
     }
 
     @Test
-    @Transactional
     void shouldFailCreatingTedTalkWithID() throws Exception {
         tedTalkDTO.setId(12394L);
         assertThrows(TedTalkException.class, () -> this.tedTalkService.createTedTalk(tedTalkDTO));
     }
 
     @Test
-    @Transactional
     void shouldFailCreatingTedTalkWithDeletedTrue() throws Exception {
         tedTalkDTO.setDeleted(true);
         assertThrows(TedTalkException.class, () -> this.tedTalkService.createTedTalk(tedTalkDTO));
     }
 
     @Test
-    @Transactional
     void shouldFailCreatingTedTalkWithNullTitle() throws Exception {
         tedTalkDTO.setTitle(null);
         assertThrows(TedTalkException.class, () -> this.tedTalkService.createTedTalk(tedTalkDTO));
     }
 
     @Test
-    @Transactional
     void shouldFailCreatingTedTalkWithNullAuthor() throws Exception {
         tedTalkDTO.setAuthor(null);
         assertThrows(TedTalkException.class, () -> this.tedTalkService.createTedTalk(tedTalkDTO));
     }
 
     @Test
-    @Transactional(readOnly = true)
     void shouldFindTedTalksWithPaging() throws Exception {
         var response = this.tedTalkService.getAll(0);
         assertNotNull(response);
@@ -99,7 +93,6 @@ class TedTalkServiceIntegrationTest {
     }
 
     @Test
-    @Transactional
     void shouldSearchByAuthorTedTalkWithNewlySavedTedTalk() throws Exception {
         var savedTedTalk = this.tedTalkService.createTedTalk(tedTalkDTO);
 
@@ -110,7 +103,6 @@ class TedTalkServiceIntegrationTest {
     }
 
     @Test
-    @Transactional
     void shouldSearchByTitleTedTalkWithNewlySavedTedTalk() throws Exception {
         var savedTedTalk = this.tedTalkService.createTedTalk(tedTalkDTO);
 
@@ -121,7 +113,6 @@ class TedTalkServiceIntegrationTest {
     }
 
     @Test
-    @Transactional
     void shouldSearchNonExistingTedTalkAndReturnOk() throws Exception {
         var response = this.tedTalkService.search("asdf", null, null, null, null);
 
@@ -129,7 +120,6 @@ class TedTalkServiceIntegrationTest {
     }
 
     @Test
-    @Transactional
     void shouldDeleteGivenTedTalk() throws Exception {
         var response = this.tedTalkService.createTedTalk(tedTalkDTO);
 
@@ -143,7 +133,6 @@ class TedTalkServiceIntegrationTest {
     }
 
     @Test
-    @Transactional
     void shouldFailTryingToDeleteNonExistingTedTalk() throws Exception {
 
         var nullTedTalk = new Random().nextLong();
@@ -153,7 +142,6 @@ class TedTalkServiceIntegrationTest {
 
 
     @Test
-    @Transactional
     void shouldUpdateGivenTedTalk() throws Exception {
         var response = this.tedTalkService.createTedTalk(tedTalkDTO);
 
@@ -174,7 +162,6 @@ class TedTalkServiceIntegrationTest {
     }
 
     @Test
-    @Transactional
     void shouldFailTryingToUpdateWithNullAuthor() throws Exception {
         var response = this.tedTalkService.createTedTalk(tedTalkDTO);
 
@@ -190,7 +177,6 @@ class TedTalkServiceIntegrationTest {
     }
 
     @Test
-    @Transactional
     void shouldFailTryingToUpdateWithNullTitle() throws Exception {
         var response = this.tedTalkService.createTedTalk(tedTalkDTO);
 
@@ -206,7 +192,6 @@ class TedTalkServiceIntegrationTest {
     }
 
     @Test
-    @Transactional
     void shouldFailTryingToUpdateWithNullDate() throws Exception {
         var response = this.tedTalkService.createTedTalk(tedTalkDTO);
 

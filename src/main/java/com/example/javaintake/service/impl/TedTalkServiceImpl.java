@@ -13,6 +13,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class TedTalkServiceImpl implements TedTalkService {
@@ -24,6 +25,7 @@ public class TedTalkServiceImpl implements TedTalkService {
     }
 
     @Override
+    @Transactional
     public TedTalkDTO createTedTalk(TedTalkDTO dto) {
         TedTalkUtils.validateCreate(dto);
         TedTalk tedTalk = new TedTalk(dto);
@@ -33,11 +35,13 @@ public class TedTalkServiceImpl implements TedTalkService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Page<TedTalkDTO> getAll(Integer page) {
         return tedTalkRepository.findAll(PageRequest.of(page == null ? 0 : page, 50)).map(TedTalkDTO::new);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Page<TedTalkDTO> search(String author, String title, Long views, Long likes, Integer page) {
         TedTalk tedTalk = new TedTalk();
         tedTalk.setAuthor(author);
@@ -67,6 +71,7 @@ public class TedTalkServiceImpl implements TedTalkService {
     }
 
     @Override
+    @Transactional
     public void delete(Long id) {
         TedTalk tedTalk = this.tedTalkRepository.findById(id).orElseThrow(() -> new TedTalkException("TED Talk Not Found!", HttpStatus.NOT_FOUND));
         if (Boolean.TRUE.equals(tedTalk.getDeleted())) {
@@ -78,6 +83,7 @@ public class TedTalkServiceImpl implements TedTalkService {
     }
 
     @Override
+    @Transactional
     public TedTalkDTO updateTedTalk(Long id, TedTalkDTO dto) {
         TedTalkUtils.validateUpdate(dto);
         TedTalk tedTalk = this.tedTalkRepository.findById(id).orElseThrow(() -> new TedTalkException("TED Talk Not Found!", HttpStatus.NOT_FOUND));
